@@ -1,0 +1,202 @@
+<html>
+
+<head>
+  <title>Admin Page</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="jquery-3.2.1.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <div class="jumbotron text-center">
+    <h1>Admin Page</h1>
+    <p>Here you can manage your events or venues. Add, list or view your events/venues</p>
+    <button class="btn btn-primary active" type="button" id="eventBut" name="button">Add Event</button>
+    <button class="btn btn-primary active" type="button" id="venueBut" name="button">Add Venue</button>
+    <button class="btn btn-primary active" type="submit" id="listBut" name="button">List Venue</button>
+    <button class="btn btn-primary active" type="button" id="searchBut">Events!</button>
+    <button class="btn btn-primary active" type="button" id="closer" name="button">Close All</button>
+    <a class="btn btn-primary active" href="/events2017/index.html">GO TO INDEX</a>
+  </div>
+
+
+  <div class="container">
+
+
+    <div id="contact" style="display:none;">
+      <h1>Event Add</h1>
+      <form action='/events2017/events/add/' method="post">
+        <fieldset>
+
+          <label for="event_id">EventID*:</label>
+          <input class="form-control" type="text" id="event_id" name="event_id" placeholder="Enter event's id" / required>
+
+          <label for="title">Title*:</label>
+          <input class="form-control" type="text" id="title" name="title" placeholder="Enter event's title" /required>
+
+          <label for="venue_id">VenueID*:</label>
+          <input class="form-control" type="text" id="venue_id" name="venue_id" placeholder="Enter event's venue_id" /required>
+
+          <label for="date">Date*:</label>
+          <input class="form-control" type="date" id="date" name="date" placeholder="Enter event date" /required>
+
+          <label for="url">Url:</label>
+          <input class="form-control" type="url" id="url" name="url" placeholder="Enter event's url" />
+
+          <label for="blurb">Blurb:</label>
+          <input class="form-control" type="text" id="blurb" name="blurb" placeholder="Enter event's blurb" />
+
+          <br>
+          <button class="btn btn-primary active" type="submit" id="evAdd" value="Send message" />Send!</button>
+
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="contact1" class="form-group" style="display:none;">
+      <h1>Venue Add</h1>
+      <form action='/events2017/venues/add' method="post">
+        <fieldset>
+
+          <label for="VeAddName">Name*:</label>
+          <input class="form-control" type="text" id="VeAddName" name="VeAddName" placeholder="Enter venue's name" / required>
+
+          <label for="VeAddPostcode">Postcode:</label>
+          <input class="form-control" type="text" id="VeAddPostcode" name="VeAddPostcode" placeholder="Enter venue's postcode" />
+
+          <label for="VeAddTown">Town:</label>
+          <input class="form-control" type="text" id="VeAddTown" name="VeAddTown" placeholder="Enter venue's town" />
+
+          <label for="VeAddUrl">Url:</label>
+          <input class="form-control" type="url" id="VeAddUrl" name="VeAddUrl" placeholder="Enter venue's url" />
+
+          <label for="VeAddIcon">Icon:</label>
+          <input class="form-control" type="text" id="VeAddIcon" name="VeAddIcon" placeholder="Enter venue's icon of url" />
+
+          <br>
+          <button class="btn btn-primary active" type="submit" id="venAdd"/>Send!</button>
+
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="contact2">
+
+    </div>
+    <center><img id="pic" src="https://media.dayoutwiththekids.co.uk/media/14769/32332-woodlands-leisure-park-dartmouth-03.jpg?mode=crop&quality=75&width=1600" style="width=1300;height:400"></center>
+    <center><img id="pic1" src="http://media-room5.trivago.com/wp-content/uploads/sites/16/2016/07/21160744/Kamandu-Park-Katlantis-Splash-Family-2.jpg" style="width=100%;height:43%"></center>
+
+    <div class="form-group" id=contact3>
+    <form class="form-horizontal" id="forming" >
+      <fieldset>
+
+        <label for="search" required>title:</label>
+        <input class="form-control" type="text" id="search" name="search" placeholder="Enter event's title" />
+        <br>
+        <label for="date" required>date:</label>
+        <input class="form-control" type="date" id="date" name="date"/>
+        <br>
+        <button class="btn btn-primary active" type="button" form="forming" id="but" >Search!</button><!-- onclick="getURL('/events2017/events/get/')" -->
+
+      </fieldset>
+    </form>
+    </div>
+
+    <br>
+    <div id="resDiv">
+      <p id="result" style="display=none;"> .</p>
+
+    </div>
+  </div>
+
+  <script>
+  $(function() {
+    $('#contact,#contact1,#pic1,#contact3').hide();
+
+    $("#closer").on('click', function(){
+      $('#contact,#contact1,#contact2,#contact3,#resDiv,#pic').hide("slow", function() {});
+      $('#pic1').show("slow", function() {});
+    })
+
+    $("#eventBut").on('click', function(){
+      $('#pic,#pic1,#contact1,#contact2,#contact3,#resDiv').hide("slow", function() {});
+      $('#contact').show("slow", function() {});
+    })
+
+    $("#venueBut").on('click', function(){
+      $('#pic,#pic1,#contact,#contact2,#contact3,#resDiv').hide("slow", function() {});
+      $('#contact1').show("slow", function() {});
+    })
+
+    $("#listBut").on('click', function(){
+      $('#pic,#pic1,#contact,#contact1,#contact3,#resDiv').hide("slow", function() {});
+      $('#contact2').show("slow", function() {});
+      $('#contact2').html("<h1>Venue List</h1><br><ul></ul> ");
+      $.get("/events2017/venues", function(data, status){
+        // data=JSON.parse(data);
+        var arrayed=[]
+        for (var ven in data.venues) {
+          arrayed.push(ven);
+        }
+        for (i = 0; i < Object.keys(data.venues).length; i++){
+
+          $('#contact2').append('<li class="list-group-item"><a class="links" href='+JSON.stringify(data.venues[arrayed[i]].url)+'>'+(i+1)+": "+ JSON.stringify(data.venues[arrayed[i]].name) +'</a></li>');
+          $('#contact2').append("<br>");
+          // alert(i);
+        }//for i
+      })//done
+    })//button
+
+      $("#searchBut").on('click', function(){
+      $('#pic,#pic1,#contact,#contact1,#contact2').hide("slow", function() {});
+      $('#contact3,#resDiv').show("slow", function() {});
+
+    })
+
+      $("#but").on('click', function(){
+
+        alert($('#search').val())
+      $.ajax({
+        method: "GET",
+        url: "/events2017/events/search",
+        data: {search:$('#search').val(),date:$('#date').val()},
+        dataType: 'json',
+        traditional: true
+      }).done(function(res) {
+
+        $('#result').show();
+        var b=res;
+        $('#result').html(b.events.length+" events found.");
+        for (i = 0; i < b.events.length; i++){//3
+          $('#result').append("<br>");
+          $('#result').append('<p class="resP"> Title: '+ JSON.stringify(b.events[i].title)+", Date: "+JSON.stringify(b.events[i].date)+", Venue: "+JSON.stringify(b.events[i].venue.name)+'</p>');
+          $('#result').append('<li class="list-group-item"><a class="resA" href='+JSON.stringify(b.events[i].url)+'>'+(i+1)+".Event: Link to Event!"+'</a></li>');
+        }//For
+      });//done
+
+    });//buton
+  })//func
+
+</script>
+<style media="screen">
+.links:hover{
+
+  font-size: 15px;
+
+}
+@media screen and (max-width: 480px) {
+    #pic {
+      display:none;
+  }
+  #pic1 {
+    display:none;
+}
+}
+</style>
+
+</body>
+</html>

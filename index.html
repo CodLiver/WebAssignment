@@ -1,0 +1,114 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="jquery-3.2.1.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="jumbotron text-center">
+    <h1>Index Page</h1>
+    <p>Here you can list events of your choice. Please choose your event type and date type.</p>
+    <button class="btn btn-primary active" type="button" id="listBut" >Venues!</button>
+    <button class="btn btn-primary active" type="button" id="searchBut" >Events!</button>
+    <a class="btn btn-primary active" href="/events2017/admin.html">GO TO ADMIN</a>
+  </div>
+
+  <div class="container">
+    <form class="form-horizontal" id="forming" >
+      <fieldset>
+
+        <label for="search" required>title:</label>
+        <input class="form-control" type="text" id="search" name="search" placeholder="Enter event's title" />
+        <br>
+        <label for="date" required>date:</label>
+        <input class="form-control" type="date" id="date" name="date"/>
+        <br>
+        <button class="btn btn-primary active" type="button" form="forming" id="but" >Search!</button><!-- onclick="getURL('/events2017/events/get/')" -->
+
+      </fieldset>
+    </form>
+    <br>
+    <div id="resDiv">
+      <p id="result" style="display=none;"> .</p>
+
+    </div>
+    <div id="contact2">
+
+    </div>
+  </div>
+<script>
+
+
+$(function() {
+
+  $('#result').hide();
+  $('#contact2').hide();
+
+
+
+
+  $("#but").on('click', function(){
+
+    $.ajax({
+      method: "GET",
+      url: "/events2017/events/search",
+      data: {search:$('#search').val(),date:$('#date').val()},
+      dataType: 'json',
+      traditional: true
+    }).done(function(res) {
+
+      $('#result').show();
+
+
+      var b=res;
+      $('#result').html(b.events.length+" events found.");
+
+      for (i = 0; i < b.events.length; i++){//3
+        $('#result').append("<br>");
+        $('#result').append('<p class="resP"> Title: '+ JSON.stringify(b.events[i].title)+", Date: "+JSON.stringify(b.events[i].date)+", Venue: "+JSON.stringify(b.events[i].venue.name)+'</p>');
+        $('#result').append('<li class="list-group-item"><a class="resA" href='+JSON.stringify(b.events[i].url)+'>'+(i+1)+".Event: Link to Event!"+'</a></li>');
+      }//For
+    });//done
+
+  });//buton
+
+  $("#searchBut").on('click', function(){
+    $('#contact2').hide("slow", function() {});
+    $('#forming,#resDiv').show("slow", function() {});
+
+  })
+
+  $("#listBut").on('click', function(){
+    $('#forming').hide("slow", function() {});
+    $('#contact2').show("slow", function() {});
+    $("#resDiv").hide("slow", function() {});
+
+    $('#contact2').html("<h1>Venue List</h1><br><ul></ul> ");
+
+    $.get("/events2017/venues", function(data, status){
+
+      var arrayed=[]
+      for (var ven in data.venues) {
+        arrayed.push(ven);
+      }
+      for (i = 0; i < Object.keys(data.venues).length; i++){
+
+        $('#contact2').append('<li class="list-group-item"><a class="links" href='+JSON.stringify(data.venues[arrayed[i]].url)+'>'+(i+1)+": "+ JSON.stringify(data.venues[arrayed[i]].name) +'</a></li>');
+        $('#contact2').append("<br>");
+
+      }//for i
+    })//done
+
+  })//but ListVen
+
+})//func
+
+</script>
+
+</body>
+</html>
