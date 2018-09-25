@@ -17,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CodLiver/botTest.git"
+    "url": "git+https://github.com/CodLiver/WebAssignment.git"
   },
   "keywords": [
     "web"
   ],
-  "author": "CemEkinSunal",
+  "author": "CES",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CodLiver/botTest/issues"
+    "url": "https://github.com/CodLiver/WebAssignment/issues"
   },
-  "homepage": "https://github.com/CodLiver/botTest#readme"
+  "homepage": "https://github.com/CodLiver/WebAssignment#readme"
 }
