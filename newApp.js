@@ -131,18 +131,18 @@ app.get('/events2017/events/search', function (req, res) {
 
   if (typeof date != 'undefined'&&typeof title != 'undefined'){
 
-    var url='http://api.eventful.com/json/events/search?keywords='+title+'&date='+date+'&location=UK&app_key=bq9KMQfVVqKfWqQp';//UK
+    var url='http://api.eventful.com/json/events/search?keywords='+title+'&date='+date+'&location=UK&app_key=TOKEN';//UK
 
   }else if(typeof title == 'undefined'&&typeof date != 'undefined'){
-    var url='http://api.eventful.com/json/events/search?keywords=&date='+date+'&location=UK&app_key=bq9KMQfVVqKfWqQp';
+    var url='http://api.eventful.com/json/events/search?keywords=&date='+date+'&location=UK&app_key=TOKEN';
 
   }else if(typeof title != 'undefined'&&date == 'undefined'){
 
-    var url='http://api.eventful.com/json/events/search?keywords='+title+'&date=all&location=UK&app_key=bq9KMQfVVqKfWqQp';
+    var url='http://api.eventful.com/json/events/search?keywords='+title+'&date=all&location=UK&app_key=TOKEN';
 
   }else{
 
-    var url='http://api.eventful.com/json/events/search?keywords=&date=&location=UK&app_key=bq9KMQfVVqKfWqQp';
+    var url='http://api.eventful.com/json/events/search?keywords=&date=&location=UK&app_key=TOKEN';
   }
   request({
     url: url,
@@ -216,7 +216,7 @@ app.get('/events2017/events/get/:event_id', function (req, res) {
         break;
       }//if
     }//for i
-    var url = "http://api.eventful.com/json/events/get?id="+event_id+"&app_key=bq9KMQfVVqKfWqQp";
+    var url = "http://api.eventful.com/json/events/get?id="+event_id+"&app_key=TOKEN";
     request({
       url: url,
       json: true,
