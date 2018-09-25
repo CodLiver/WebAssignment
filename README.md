@@ -1,11 +1,11 @@
-## Website Creation Assignment
+# Website Creation Assignment
 The aim is to create a website that allows you to GET events or venues that are around you. One can choose events with certain keywords. People with certain IP addresses or auth_tokens can sign in as admins to website and add their own events, venues. 
 
 This is my cloud deployment link (shown in video):
 
 https://web-frigid-reverification.eu-gb.mybluemix.net/events2017/index.html
 
-# INSTRUCTIONS:
+## INSTRUCTIONS:
 
 * extract the contents of the file
 
