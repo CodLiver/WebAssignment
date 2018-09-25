@@ -1,4 +1,5 @@
 /* from node js express start  */
+//libraries
 var express = require('express');
 var app = express();
 var fs = require("fs");
@@ -9,10 +10,13 @@ var request = require('request');
 var d = new Date();
 
 
+
+//main root page
 app.use(cookieParser());
 app.get('/', function(req, res) {
   console.log('Cookies: ', req.cookies)
 })
+
 //general login page, credentials are taken here
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/events2017/auth', function (req, res) {
@@ -86,7 +90,7 @@ app.get('/events2017/admin.html', function (req, res) {
 }
 })
 
-// common, can be seen by admin
+// public, can be seen by admin.
 app.get('/events2017/index.html', function (req, res) {
   fs.readFile( __dirname + "/" + "index.html" , 'utf8', function (err, data) {//"users.json"
 
@@ -94,7 +98,7 @@ app.get('/events2017/index.html', function (req, res) {
 });
 })
 
-// after index.html, common
+// after index.html, public page. GET searching events
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/events2017/events/search', function (req, res) {
 
@@ -190,7 +194,7 @@ app.get('/events2017/events/search', function (req, res) {
 });//fs read
 })//get big
 
-// after index.html, common?
+// after index.html, public. see venues in JSON form. GET
 app.get('/events2017/venues', function (req, res) {//array problem
 
   fs.readFile( __dirname + "/" + "exVenues.json" , 'utf8', function (err, data) {//"users.json"
@@ -198,6 +202,8 @@ app.get('/events2017/venues', function (req, res) {//array problem
   res.end( data);//JSON.stringify(data));
 });
 })
+
+//GET get event by id
 app.get('/events2017/events/get/:event_id', function (req, res) {
   event_id=req.params.event_id.toString();
   event_id = event_id.replace(/['"]+/g, '');
@@ -245,6 +251,7 @@ app.get('/events2017/events/get/:event_id', function (req, res) {
   });//fs
 })//get
 
+//POST. add event to DB public.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/events2017/events/add', function(req, res) {
   var str=req.connection.remoteAddress;
@@ -353,7 +360,7 @@ app.post('/events2017/events/add', function(req, res) {
 });
 });
 
-//admin controlled
+//POST add venue by admin.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/events2017/venues/add', function(req, res) {
   var name=req.body.VeAddName;
@@ -448,7 +455,7 @@ app.post('/events2017/venues/add', function(req, res) {
   }}) //request end
 
 });
-//login parser
+//login parser POST AUTH.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.post('/events2017/auth', function(req, res) {
